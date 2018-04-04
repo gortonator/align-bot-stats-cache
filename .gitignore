@@ -12,3 +12,12 @@
 
 # Project-local glide cache, RE: https://github.com/Masterminds/glide/issues/736
 .glide/
+
+# MAC OS Stuff
+.DS_Store
+
+# Editor related
+.idea
+.vscode
+.eclipse
+*.sublime-project
