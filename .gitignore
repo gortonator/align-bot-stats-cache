@@ -21,3 +21,6 @@
 .vscode
 .eclipse
 *.sublime-project
+
+# RDB
+*.rdb
