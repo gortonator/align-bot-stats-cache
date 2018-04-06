@@ -12,6 +12,7 @@ func handleError(err error, messages ... string) {
 	comboMessage := strings.Join(messages, ", ")
 	if err != nil {
 		log.Fatal("ERR "+comboMessage, err)
+		panic(err)
 	}
 }
 
@@ -28,12 +29,11 @@ func Post(key, value string) {
 	handleError(err)
 }
 
-func Get(key string) string {
+func Get(key string) (string, error) {
 	c := redisConnect()
 	defer c.Close()
 	result, err := redis.String(c.Do("GET", key))
-	handleError(err)
-	return result
+	return result, err
 }
 
 func AddToUnorderedSet(key string, members ... string) {

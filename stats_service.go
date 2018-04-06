@@ -3,8 +3,8 @@ package main
 import (
 	"log"
 	"net/http"
-	"./cache"
-	route "./routehandlers"
+	route "github.com/rapidclock/align-bot-stats-cache/routehandlers"
+	"github.com/rapidclock/align-bot-stats-cache/cache"
 )
 
 func init() {
