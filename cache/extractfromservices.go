@@ -8,38 +8,37 @@ import (
 	"bytes"
 	"encoding/json"
 	"time"
+	"crypto/tls"
 )
+
+var customHttpsClient = &http.Client{
+	Timeout: time.Duration(requestTimeOutSeconds * time.Second),
+	Transport: &http.Transport{
+		TLSClientConfig: &tls.Config{
+			InsecureSkipVerify: true,
+		},
+	},
+}
 
 func parseResponseForProperty(res *http.Response, property string) (string, error) {
 	body, err := ioutil.ReadAll(res.Body)
 	defer res.Body.Close()
-	if err != nil {
-		return "", err
-	}
+	handleError(err)
 	return jsonparser.GetString(body, property)
 }
 
 func getAndParse(url, property string) (string, error) {
-	timeout := time.Duration(requestTimeOutSeconds * time.Second)
-	client := http.Client{
-		Timeout: timeout,
-	}
-	res, err := client.Get(url)
-	if err != nil {
-		return "", err
-	}
+	req, _ := http.NewRequest("GET", url, nil)
+	res, err := customHttpsClient.Do(req)
+	handleError(err)
 	return parseResponseForProperty(res, property)
 }
 
 func postRequest(jsonBody []byte, url, contentType string) (*http.Response, error) {
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonBody))
+	handleError(err)
 	req.Header.Set("Content-Type", contentType)
-	timeout := time.Duration(requestTimeOutSeconds * time.Second)
-	client := &http.Client{
-		Timeout: timeout,
-	}
-	res, err := client.Do(req)
-	return res, err
+	return customHttpsClient.Do(req)
 }
 
 func makeJsonForCampus(campus string) ([]byte, error) {
@@ -53,14 +52,12 @@ func postAndParseTopKArray(url string) ([]string, error) {
 	var topKValues []string
 	reqBody := []byte(requestTopKValue)
 	res, err := postRequest(reqBody, url, requestTypeText)
-	if err != nil {
-		return topKValues, err
-	}
+	handleError(err)
+
 	body, err := ioutil.ReadAll(res.Body)
 	defer res.Body.Close()
-	if err != nil {
-		return topKValues, err
-	}
+	handleError(err)
+
 	jsonErr := json.Unmarshal(body, &topKValues)
 	return topKValues, jsonErr
 }
@@ -73,13 +70,11 @@ func extractStudentNumbersAll() (string, error) {
 func requestStudentNumberByCampus(campus string) (string, error) {
 	url := servicesServerBase + servicesStudentCountEndpoint
 	reqBodyJson, err := makeJsonForCampus(campus)
-	if err != nil {
-		return "", err
-	}
+	handleError(err)
+
 	res, err := postRequest(reqBodyJson, url, requestTypeJson)
-	if err != nil {
-		return "", err
-	}
+	handleError(err)
+
 	return parseResponseForProperty(res, responseStudentCountProperty)
 }
 

@@ -12,7 +12,6 @@ func handleError(err error, messages ... string) {
 	comboMessage := strings.Join(messages, ", ")
 	if err != nil {
 		log.Fatal("ERR "+comboMessage, err)
-		panic(err)
 	}
 }
 
@@ -48,10 +47,7 @@ func AddToUnorderedSet(key string, members ... string) {
 	defer c.Close()
 	for _, member := range members {
 		_, err := c.Do("SADD", key, member)
-		if err != nil {
-			handleError(err)
-			break
-		}
+		handleError(err)
 	}
 }
 

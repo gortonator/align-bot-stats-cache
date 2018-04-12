@@ -2,7 +2,6 @@ package cache
 
 const GenderRatioMale = "GR_MALE"
 const GenderRatioFemale = "GR_FEMALE"
-const GenderRatioOther = "GR_OTHER"
 
 const StudentCountTotal = "STU_CNT_TOTAL"
 const StudentCountSeattle = "STU_CNT_SEA"
@@ -27,7 +26,7 @@ const SalaryAvg = "SALARY_AVG"
 
 const AcceptanceRates = "ACCEPTANCE_RATE"
 
-const servicesServerBase = "http://asd2.ccs.neu.edu:8080"
+const servicesServerBase = "https://asd4.ccs.neu.edu:8080"
 const servicesStudentCountTotalEndpoint = "/stats/total-student-count"
 const servicesStudentCountEndpoint = "/stats/student-count"
 const servicesGraduateCountEndpoint = "/stats/graduates"
@@ -37,7 +36,7 @@ const servicesTopBgsEndpoint = "/undergradmajors"
 const responseStudentCountProperty = "studentcount"
 const responseGraduateNumProperty = "graduates"
 
-const requestTimeOutSeconds = 1
+const requestTimeOutSeconds = 2
 const requestTypeJson = "application/json"
 const requestTypeText = "text/plain"
 const requestCampusProperty = "campus"
