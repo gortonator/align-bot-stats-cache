@@ -22,6 +22,13 @@ func redisConnect() redis.Conn {
 	return c
 }
 
+func ClearDB() {
+	c := redisConnect()
+	defer c.Close()
+	_, err := c.Do("FLUSHALL")
+	handleError(err)
+}
+
 func Post(key, value string) {
 	c := redisConnect()
 	defer c.Close()

@@ -1,6 +1,7 @@
 package cache
 
 func InitializeWithStats() {
+	ClearDB()
 	initGenderRatio()
 	initStudentNumbers()
 	initNumOfGraduates()
@@ -28,6 +29,27 @@ func initStudentNumbers() {
 	silCount := "43"
 	totalCount := "418"
 
+	value, err := extractStudentNumbersAll()
+	if err == nil {
+		totalCount = value
+	}
+	value, err = extractStudentNumbersSeattle()
+	if err == nil {
+		seaCount = value
+	}
+	value, err = extractStudentNumbersBoston()
+	if err == nil {
+		bosCount = value
+	}
+	value, err = extractStudentNumbersCharlotte()
+	if err == nil {
+		ctlCount = value
+	}
+	value, err = extractStudentNumbersSilValley()
+	if err == nil {
+		silCount = value
+	}
+
 	Post(StudentCountTotal, totalCount)
 	Post(StudentCountSeattle, seaCount)
 	Post(StudentCountBoston, bosCount)
@@ -37,7 +59,10 @@ func initStudentNumbers() {
 
 func initNumOfGraduates() {
 	totalNumGrads := "175"
-
+	value, err := extractNumGraduates()
+	if err == nil {
+		totalNumGrads = value
+	}
 	Post(NumberOfGraduatesTotal, totalNumGrads)
 }
 
@@ -51,13 +76,19 @@ func initProgramCost() {
 
 func initTopEmployers() {
 	topEmplrs := []string{"Amazon", "Google", "Facebook", "Zillow", "Apple"}
-
+	values, err := extractTopEmployers()
+	if err == nil {
+		topEmplrs = values
+	}
 	AddToUnorderedSet(TopEmployers, topEmplrs...)
 }
 
 func initTopBackgrounds() {
 	topBgs := []string{"Criminal Justice", "Arts", "Math", "Chemistry", "Physics"}
-
+	values, err := extractTopBackgrounds()
+	if err == nil {
+		topBgs = values
+	}
 	AddToUnorderedSet(TopBackgrounds, topBgs...)
 }
 
