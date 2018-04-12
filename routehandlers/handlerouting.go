@@ -10,7 +10,7 @@ func (h *RedisAppHandler) ServeHTTP(res http.ResponseWriter, req *http.Request) 
 	var head string
 	head, req.URL.Path = pathparser.ShiftPath(req.URL.Path)
 	if head == "stats" {
-		res.Header().Set("Content-Type", "application/json")
+		res.Header().Set("Content-Type", responseTypeJson)
 		h.statsHandler.ServeHTTP(res, req)
 	} else {
 		http.Error(res, "Not Found", http.StatusNotFound)

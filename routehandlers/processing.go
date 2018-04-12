@@ -72,14 +72,24 @@ func (h *ProgramCostHandler) processPerCreditCost(w http.ResponseWriter) {
 	w.Write(marshallToJson(perCreditCost))
 }
 
+func processToValidKValue(k, limit int) int {
+	if k < 1 || k > limit {
+		return limit
+	} else {
+		return k
+	}
+}
+
 func (h *TopEmployersHandler) processTopK(k int, w http.ResponseWriter) {
-	topEmp := cache.GetTopEmployers()
+	K := processToValidKValue(k, topKLimit)
+	topEmp := cache.GetTopEmployers(K)
 	body := marshallToJson(topEmp)
 	w.Write(body)
 }
 
 func (h *TopBackgroundsHandler) processTopK(k int, w http.ResponseWriter) {
-	topBgs := cache.GetTopBackgrounds()
+	K := processToValidKValue(k, topKLimit)
+	topBgs := cache.GetTopBackgrounds(K)
 	body := marshallToJson(topBgs)
 	w.Write(body)
 }

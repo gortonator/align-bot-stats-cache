@@ -90,17 +90,17 @@ func GetPerCreditCost() *models.PerCreditProgramCost {
 	return perCredCost
 }
 
-func GetTopEmployers() *models.TopEmployers {
+func GetTopEmployers(k int) *models.TopEmployers {
 	topEmpData := GetFromUnorderedSet(TopEmployers)
 	topEmp := new(models.TopEmployers)
-	topEmp.Employers = topEmpData
+	topEmp.Employers = topEmpData[:k]
 	return topEmp
 }
 
-func GetTopBackgrounds() *models.TopBackgrounds {
+func GetTopBackgrounds(k int) *models.TopBackgrounds {
 	topBgData := GetFromUnorderedSet(TopBackgrounds)
 	topBg := new(models.TopBackgrounds)
-	topBg.Backgrounds = topBgData
+	topBg.Backgrounds = topBgData[:k]
 	return topBg
 }
 
