@@ -16,7 +16,7 @@ func handleError(err error, messages ... string) {
 }
 
 func redisConnect() redis.Conn {
-	c, err := redis.Dial("tcp", "redis_db:6379")
+	c, err := redis.Dial("tcp", "redis_server:6379")
 	handleError(err)
 	return c
 }
