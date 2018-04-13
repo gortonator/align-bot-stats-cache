@@ -27,6 +27,7 @@ Redis Cache Layer for the NEU ALIGN Chatbot
     - run this command `redis-server`
 1. Run the align-bot-stats-cache Application.
     - go to `~/go/bin` and run the output file called **align-bot-stats-cache** as `./align-bot-stats-cache`
+
 **NOTE :** 
   - The application is running on localhost right now. The set port is 15000.
   - Remember to Start the Redis server before starting the applicaton. It requires the redis server to be running.
